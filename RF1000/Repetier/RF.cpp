@@ -20,6 +20,10 @@
 #include "Repetier.h"
 #include <Wire.h>
 
+char g_allowIgnoreZMinEndswitch = 0;
+int g_allowIgnoreZMinEndswitchTimer = 0;
+float g_lastZCommandPos = 0;
+
 
 unsigned long	g_lastTime				   = 0;
 
@@ -7614,6 +7618,30 @@ void processCommand( GCode* pCommand )
 						}
 					}
 				}
+			}
+			case 4031: // M4031 - allow IgnoreZMinEndswitch on negative move
+			{
+				if( isSupportedMCommand( pCommand->M, OPERATING_MODE_PRINT ) )
+				{
+					if( Printer::isHomed() )
+					{
+						g_allowIgnoreZMinEndswitch = 1;
+						Com::printFLN( PSTR( "gcode:  M4031, g_allowIgnoreZMinEndswitch: " ), g_allowIgnoreZMinEndswitch );
+					}
+				}
+				break;
+			}
+			case 4030: // M4030 - disallow IgnoreZMinEndswitch
+			{
+				if( isSupportedMCommand( pCommand->M, OPERATING_MODE_PRINT ) )
+				{
+					if( Printer::isHomed() )
+					{
+						g_allowIgnoreZMinEndswitch = 0;
+						Com::printFLN( PSTR( "gcode:  M4030, g_allowIgnoreZMinEndswitch: " ), g_allowIgnoreZMinEndswitch );
+					}
+				}
+				break;
 			}
 		}
 	}

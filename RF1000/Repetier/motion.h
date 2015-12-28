@@ -15,6 +15,9 @@
     along with Repetier-Firmware.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+extern char g_allowIgnoreZMinEndswitch;
+extern int g_allowIgnoreZMinEndswitchTimer;
+extern float g_lastZCommandPos;
 
 #ifndef MOTION_H
 #define MOTION_H
@@ -212,9 +215,29 @@ public:
         }
 
 		// Test Z-Axis every step if necessary, otherwise it could easyly ruin your printer!
-        if(isZNegativeMove() && Printer::isZMinEndstopHit())
+		if ( ( g_lastZCommandPos != Printer::queuePositionCommandMM[Z_AXIS] ) && g_allowIgnoreZMinEndswitch )
 		{
-			setZMoveFinished();
+			g_lastZCommandPos = Printer::queuePositionCommandMM[Z_AXIS];
+			g_allowIgnoreZMinEndswitchTimer += 1;
+			if ( g_allowIgnoreZMinEndswitchTimer > 1 )
+			{
+				g_allowIgnoreZMinEndswitch = 0;
+				g_allowIgnoreZMinEndswitchTimer = 0;
+			}
+		}
+		if ( g_allowIgnoreZMinEndswitch && Printer::isHomed() && Printer::doHeatBedZCompensation )
+		{
+			if ( Printer::queuePositionLastMM[Z_AXIS] < 0.05 ) // negative G1 Z werte nicht zulassen
+			{
+				setZMoveFinished();
+			}
+		}
+		else
+		{
+			if(isZNegativeMove() && Printer::isZMinEndstopHit())
+			{
+				setZMoveFinished();
+			}
 		}
         if(isZPositiveMove() && Printer::isZMaxEndstopHit())
         {

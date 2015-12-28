@@ -1,3 +1,12 @@
+V RF.01.11.X-3 (28.12.2015)
+
+- ADD G-code M4031 der erlaubt beim nächsten G1 Zx Befehl den ZMinEndschalter zu überfahren
+	z.b. wenn im 1. Layer eine geringere Höhe als die Startline gefordert wird.
+		motion.h
+		RF.cpp
+
+
+
 V RF.01.11.X-2 (28.12.2015)
 
 - ADD Filamentload Funktion G-code: M4001 S1000
