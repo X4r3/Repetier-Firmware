@@ -1,0 +1,5 @@
+V RF.01.11.X-1 (28.12.2015)
+
+- Konfiguration angepasst ( Extruderschritte, Verfahrgeschdindigkeit bei Homing, Extrudertemperaturen, ...)
+	Configuration.h
+	RF1000.h

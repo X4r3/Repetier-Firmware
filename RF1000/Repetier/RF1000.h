@@ -29,7 +29,7 @@
 // ##########################################################################################
 
 /** \brief Allows to use the device for milling */
-#define	FEATURE_MILLING_MODE				1													// 1 = on, 0 = off
+#define	FEATURE_MILLING_MODE				0													// 1 = on, 0 = off
 
 
 #if FEATURE_MILLING_MODE
@@ -225,7 +225,7 @@ Overridden if EEPROM activated.*/
 #define EXT0_Y_OFFSET						0
 
 /** \brief for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated. */
-#define EXT0_STEPS_PER_MM					(8.75 * RF_MICRO_STEPS)
+#define EXT0_STEPS_PER_MM					(9.32 * RF_MICRO_STEPS)
 
 /** \brief What type of sensor is used?
 3 is mendel-parts thermistor (EPCOS G550) */
@@ -745,13 +745,13 @@ can set it on for safety. */
 #define	LOOP_INTERVAL						2000												// [ms]
 
 /** \brief Automatic filament change, unmounting of the filament - ensure that G1 does not attempt to extrude more than EXTRUDE_MAXLENGTH */
-#define	UNMOUNT_FILAMENT_SCRIPT_WITH_HEATING		"M109 S140\nG21\nG90\nG92 E0\nG1 E-90 F500\nM104 S0"
+#define	UNMOUNT_FILAMENT_SCRIPT_WITH_HEATING		"M109 S199\nG21\nG90\nG92 E0\nG1 E-90 F500\nM104 S0"
 
 /** \brief Automatic filament change, unmounting of the filament - ensure that G1 does not attempt to extrude more than EXTRUDE_MAXLENGTH */
 #define	UNMOUNT_FILAMENT_SCRIPT_WITHOUT_HEATING		"G21\nG90\nG92 E0\nG1 E-90 F500"
 
 /** \brief Automatic filament change, mounting of the filament with heating - ensure that G1 does not attempt to extrude more than EXTRUDE_MAXLENGTH */
-#define	MOUNT_FILAMENT_SCRIPT_WITH_HEATING			"M109 S250\nG21\nG90\nG92 E0\nG1 E90 F100\nM104 S0"
+#define	MOUNT_FILAMENT_SCRIPT_WITH_HEATING			"M109 S229\nG21\nG90\nG92 E0\nG1 E90 F100\nM104 S0"
 
 /** \brief Automatic filament change, mounting of the filament without heating - ensure that G1 does not attempt to extrude more than EXTRUDE_MAXLENGTH */
 #define	MOUNT_FILAMENT_SCRIPT_WITHOUT_HEATING		"G21\nG90\nG92 E0\nG1 E90 F100"
@@ -782,8 +782,8 @@ can set it on for safety. */
 #define MAX_FEEDRATE_Z						50
 
 /** \brief Home position speed in mm/s. Overridden if EEPROM activated. */
-#define HOMING_FEEDRATE_X_PRINT				165
-#define HOMING_FEEDRATE_Y_PRINT				165
+#define HOMING_FEEDRATE_X_PRINT				30
+#define HOMING_FEEDRATE_Y_PRINT				30
 #define HOMING_FEEDRATE_Z_PRINT				10
 
 #define HOMING_FEEDRATE_X_MILL				50

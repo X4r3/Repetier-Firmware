@@ -55,7 +55,7 @@ matches, the stored values are used to overwrite the settings.
 
 IMPORTANT: With mode <>0 some changes in Configuration.h are not set any more, as they are
            taken from the EEPROM. */
-#define EEPROM_MODE							110
+#define EEPROM_MODE							18
 
 
 // ##########################################################################################
@@ -137,7 +137,7 @@ is always running and is not hung up for some unknown reason. */
 #define	FEATURE_FULL_EEPROM_RESET			1													// 1 = on, 0 = off
 
 /** \brief Defines whether a change within the menu shall be stored to the EEPROM automatically or not. */
-#define FEATURE_AUTOMATIC_EEPROM_UPDATE		1													// 1 = the EEPROM is updated automatically after each change via the menu, 0 = the EEPROM must be updated manually via the "Store to EEPROM" menu item
+#define FEATURE_AUTOMATIC_EEPROM_UPDATE		0													// 1 = the EEPROM is updated automatically after each change via the menu, 0 = the EEPROM must be updated manually via the "Store to EEPROM" menu item
 
 /** \brief Allows to use the service interval */
 #define	FEATURE_SERVICE_INTERVAL			0													// 1 = on, 0 = off
@@ -148,7 +148,7 @@ is always running and is not hung up for some unknown reason. */
 /** \brief Allows to control up to 3 servos
 Servos are controlled by a pulse width normally between 500 and 2500 with 1500ms in center position. 0 turns servo off.
 WARNING: Servos can draw a considerable amount of current. Make sure your system can handle this or you may risk your hardware! */
-#define FEATURE_SERVO						1													// 1 = on, 0 = off
+#define FEATURE_SERVO						0													// 1 = on, 0 = off
 
 /** \brief Allows to choose whether pressing of the right menu button shall enter the file menu directly */
 #define FEATURE_RIGHT_BUTTON_MENU			0													// 1 = on, 0 = off
@@ -294,7 +294,7 @@ usage or for seraching for memory induced errors. Switch it off for production, 
 #if FEATURE_OUTPUT_FINISHED_OBJECT
 
 /** \brief The following script allows to configure the exact behavior of the automatic object output */
-#define	OUTPUT_OBJECT_SCRIPT_PRINT			"G21\nG91\nG1 E-10\nG1 Z210 F5000\nG1 Y250 F7500"
+#define	OUTPUT_OBJECT_SCRIPT_PRINT			"G21\nG91\nG1 E-30\nG1 Z210 F5000\nG1 Y250 F7500"
 #define	OUTPUT_OBJECT_SCRIPT_MILL			"G28 Z0\nG21\nG91\nG1 Y250 F7500"
 
 #endif // FEATURE_OUTPUT_FINISHED_OBJECT
@@ -656,12 +656,12 @@ Values must be in range 1..255 */
 
 /** \brief Values used for preheat */
 #define UI_SET_PRESET_HEATED_BED_TEMP_PLA	60
-#define UI_SET_PRESET_EXTRUDER_TEMP_PLA		180
-#define UI_SET_PRESET_HEATED_BED_TEMP_ABS	110
+#define UI_SET_PRESET_EXTRUDER_TEMP_PLA		205
+#define UI_SET_PRESET_HEATED_BED_TEMP_ABS	100
 #define UI_SET_PRESET_EXTRUDER_TEMP_ABS		240
 
 /** \brief Values used for unload(unmount)/load(mount) filament */
-#define UI_SET_EXTRUDER_TEMP_UNMOUNT		120
+#define UI_SET_EXTRUDER_TEMP_UNMOUNT		190
 #define	UI_SET_EXTRUDER_TEMP_MOUNT			200
 
 /** \brief Extreme values */
