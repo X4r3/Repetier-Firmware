@@ -309,6 +309,8 @@ public:
 	FSTRINGVAR(tUnmountFilamentWithoutHeating)
 	FSTRINGVAR(tMountFilamentWithHeating)
 	FSTRINGVAR(tMountFilamentWithoutHeating)
+	
+	FSTRINGVAR(tMountFilamentUntilF)
 
 #if FEATURE_FIND_Z_ORIGIN
 	FSTRINGVAR(tFindZOrigin)

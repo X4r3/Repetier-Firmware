@@ -1,5 +1,15 @@
+V RF.01.11.X-2 (28.12.2015)
+
+- ADD Filamentload Funktion G-code: M4001 S1000
+	Das Filament wird in 1mm Schritten in den Extruder geschoben bis der F-Wert ein delta von 1000 überschreitet.
+		Communication.cpp
+		Communication.h
+		RF.cpp
+
+
+
 V RF.01.11.X-1 (28.12.2015)
 
 - Konfiguration angepasst ( Extruderschritte, Verfahrgeschdindigkeit bei Homing, Extrudertemperaturen, ...)
-	Configuration.h
-	RF1000.h
+		Configuration.h
+		RF1000.h

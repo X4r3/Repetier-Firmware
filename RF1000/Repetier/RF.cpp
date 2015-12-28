@@ -7582,6 +7582,39 @@ void processCommand( GCode* pCommand )
 				break;
 			}
 #endif // FEATURE_RGB_LIGHT_EFFECTS
+			case 4001: // M4001 S1000 - Load filament until F value > delta 1000
+			{
+				if( Extruder::current->tempControl.currentTemperatureC >= MIN_EXTRUDER_TEMP )
+				{
+					if( pCommand->hasS() )
+					{
+						// test and take over the specified value
+						nTemp = pCommand->S;
+						float deltaF = nTemp;
+						float fwert = readStrainGauge( ACTIVE_STRAIN_GAUGE );
+						//Com::printFLN( PSTR( "M4001: deltaF: " ), deltaF );	
+						//Com::printFLN( PSTR( "M4001: fwert: " ), fwert );	
+						
+						while( 1 )
+						{
+#if FEATURE_WATCHDOG
+							HAL::pingWatchdog();
+#endif // FEATURE_WATCHDOG
+							Commands::checkForPeriodicalActions();							
+							GCode::executeFString(Com::tMountFilamentUntilF);							
+							Commands::waitUntilEndOfAllMoves();
+
+							float nCurrentPressure = readStrainGauge( ACTIVE_STRAIN_GAUGE );	
+							//Com::printFLN( PSTR( "M4001: nCurrentPressure: " ), nCurrentPressure );							
+							if( nCurrentPressure > fwert + deltaF )
+							{
+								//Com::printFLN( PSTR( "M4001: break - nCurrentPressure > fwert + deltaF" ) );
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
