@@ -1,7 +1,19 @@
+﻿V RF.01.11.X-4 (04.01.2016)
+
+- BUGFIX 
+	- Filamentload Funktion: 
+		- Endlosschleife wurde geändert, nach 150 Schleifendurchläufen wird die Funktion abgebrochen (entpricht 150mm Förderweg).
+		- Die "Filament printed" Anzeige wird auf den Wert vor der Funktion zurückgesetzt.
+		- Falsch eingebaute oder verdrehte Messzellen werden nun berücksichtigt.
+	- G-code M4031:
+		- Den ZMinEnschalter zu überfahren war nur im 1. Druck nach dem Einschalten möglich. Ab jetzt auch im 2. ... n-ten Druck möglich.
+
+
+
 V RF.01.11.X-3 (28.12.2015)
 
-- ADD G-code M4031 der erlaubt beim n�chsten G1 Zx Befehl den ZMinEndschalter zu �berfahren
-	z.b. wenn im 1. Layer eine geringere H�he als die Startline gefordert wird.
+- ADD G-code M4031 der erlaubt beim nächsten G1 Zx Befehl den ZMinEndschalter zu überfahren
+	z.b. wenn im 1. Layer eine geringere Höhe als die Startline gefordert wird.
 		motion.h
 		RF.cpp
 
@@ -10,7 +22,7 @@ V RF.01.11.X-3 (28.12.2015)
 V RF.01.11.X-2 (28.12.2015)
 
 - ADD Filamentload Funktion G-code: M4001 S1000
-	Das Filament wird in 1mm Schritten in den Extruder geschoben bis der F-Wert ein delta von 1000 �berschreitet.
+	Das Filament wird in 1mm Schritten in den Extruder geschoben bis der F-Wert ein delta von 1000 überschreitet.
 		Communication.cpp
 		Communication.h
 		RF.cpp

@@ -7586,7 +7586,7 @@ void processCommand( GCode* pCommand )
 				break;
 			}
 #endif // FEATURE_RGB_LIGHT_EFFECTS
-			case 4001: // M4001 S1000 - Load filament until F value > delta 1000
+			case 4001: // M4001 S1000 - Load filament until F value >< delta 1000
 			{
 				if( Extruder::current->tempControl.currentTemperatureC >= MIN_EXTRUDER_TEMP )
 				{
@@ -7596,11 +7596,15 @@ void processCommand( GCode* pCommand )
 						nTemp = pCommand->S;
 						float deltaF = nTemp;
 						float fwert = readStrainGauge( ACTIVE_STRAIN_GAUGE );
+						
+						float saveFilamentPrinted = Printer::filamentPrinted;
 						//Com::printFLN( PSTR( "M4001: deltaF: " ), deltaF );	
 						//Com::printFLN( PSTR( "M4001: fwert: " ), fwert );	
 						
-						while( 1 )
+						int i = 0;						
+						while( i < 150 ) // nach 150 durchläufen (150mm) abbrechen
 						{
+							i++;
 #if FEATURE_WATCHDOG
 							HAL::pingWatchdog();
 #endif // FEATURE_WATCHDOG
@@ -7610,12 +7614,13 @@ void processCommand( GCode* pCommand )
 
 							float nCurrentPressure = readStrainGauge( ACTIVE_STRAIN_GAUGE );	
 							//Com::printFLN( PSTR( "M4001: nCurrentPressure: " ), nCurrentPressure );							
-							if( nCurrentPressure > fwert + deltaF )
+							if( nCurrentPressure > fwert + deltaF || nCurrentPressure < fwert - deltaF ) // auch für verdrehte messzellen
 							{
 								//Com::printFLN( PSTR( "M4001: break - nCurrentPressure > fwert + deltaF" ) );
 								break;
 							}
 						}
+						Printer::filamentPrinted = saveFilamentPrinted;
 					}
 				}
 			}
@@ -7626,6 +7631,7 @@ void processCommand( GCode* pCommand )
 					if( Printer::isHomed() )
 					{
 						g_allowIgnoreZMinEndswitch = 1;
+						g_allowIgnoreZMinEndswitchTimer = 0;
 						Com::printFLN( PSTR( "gcode:  M4031, g_allowIgnoreZMinEndswitch: " ), g_allowIgnoreZMinEndswitch );
 					}
 				}
@@ -7638,6 +7644,7 @@ void processCommand( GCode* pCommand )
 					if( Printer::isHomed() )
 					{
 						g_allowIgnoreZMinEndswitch = 0;
+						g_allowIgnoreZMinEndswitchTimer = 0;
 						Com::printFLN( PSTR( "gcode:  M4030, g_allowIgnoreZMinEndswitch: " ), g_allowIgnoreZMinEndswitch );
 					}
 				}
