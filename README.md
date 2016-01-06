@@ -6,7 +6,7 @@
 * Erlaube ZMinEndschalter beim nächsten G1 Zx Befehl zu überfahren per Gcode M4031 
 
 ### Will ich auch haben
-Falls du diese Features für deine RF.01.11 Firmware nutzen willst, reicht es aus folgende Dateien zu ersetzen:
+Falls du diese Features für deine RF.01.11 Firmware nutzen willst, reicht es aus folgende Dateien aus dem RF1000 Ordner zu ersetzen:
 * Communication.cpp
 * Communication.h
 *  RF.cpp
