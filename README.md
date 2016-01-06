@@ -1,44 +1,43 @@
-# RF Firmware for RF1000 and RF2000 devices
-Based on Repetier-Firmware - the fast and user friendly firmware.
+### Dieser Zweig beinhaltet meine Änderungen und zusätzliche Features für den RF1000 3D Drucker, basiert auf der offiziellen RF.01.11 Firmware von [https://github.com/RF1000/Repetier-Firmware](https://github.com/RF1000/Repetier-Firmware)
 
-## Installation
 
-The firmware is compiled and downloaded with Arduino V 1.6.5.
+### Zusätzliche Features
+* Filamentload Funktion per Gcode M4001 S[delta F-Wert]
+* Erlaube ZMinEndschalter beim nächsten G1 Zx Befehl zu überfahren per Gcode M4031 
 
-## Version RF.01.11 (2015-12-23)
+### Will ich auch haben
+Falls du diese Features für deine RF.01.11 Firmware nutzen willst, reicht es aus folgende Dateien zu ersetzen:
+* Communication.cpp
+* Communication.h
+*  RF.cpp
+*  motion.h
 
-* This is the development branch on base of the RF.01.10 stable release.
 
-## Documentation
+### Feature Beschreibung:
 
-For documentation please visit [http://www.repetier.com/documentation/repetier-firmware/](http://www.repetier.com/documentation/repetier-firmware/)
+##### Gcode M4001 S[delta F-Wert] ; Filamentload Funktion
+Der Extruder befördert das Filament in 1mm Schritten solange in das Hotend bis der F-Wert (Messzellen, DMS) den angegebenen delta Wert überschreitet. Funktioniert nur bei aufgeheizten Hotend.
 
-## Introduction
+Anwendungsbeispiel im Slicer Startcode:  
+...  
+M400 ; warte bis alle Bewegungen abgeschlossen  
+M4001 S1000 ; Filamentload Funktion bis delta F-Wert > 1000  
+M400 ; warte bis alle Bewegungen abgeschlossen  
+...  
 
-This variant of the Repetier-firmware has been optimized for the use with the
-Renkforce RF1000 and Renkforce RF2000 3D printers of Conrad Electronic SE.
-The firmware adds functionality which is not available within the standard
-Repetier-firmware and uses the settings which match the available hardware.
+##### Gcode M4031 ; Erlaube ZMinEndschalter zu überfahren
+Dieser Gcode erlaubt der Firmware beim nächsten G1 Zx Befehl den ZMinEndschalter zu überfahren. Weitere nachfolgende G1 Zx Befehle die das Heizbett nach oben fahren werden sofort bei erreichen des ZMinEndschalters gestoppt.  
+Hintergrund:  
+Bisher war es nicht möglich eine geringere Höhe im 1. Layer anzufahren als die Höhe der "Startline" im Slicer-Startcode.
 
-The main differences to the standard Repetier-firmware are:
+Anwendungsbeispiel im Slicer Startcode:  
+...  
+M400 ; warte bis alle Bewegungen abgeschlossen  
+M4031 ; erlaube ZMinEndschalter beim naechsten G1 Zx zu ueberfahren.  
+...  
 
-Common
-* Support for motor current control via the TI DRV8711.
-* Support for an external watchdog via the TI TPS382x.
-* Printing can be paused/continued via a hardware button.
-* Heat bed scan and Z-compensation via the built-in strain gauge of the extruder.
-* Automatic emergency pause in case the strain gauge delivers too high measurements.
 
-RF1000
-* Support for the RF1000 motherboard.
-* Support for the RF1000 feature controller (= 6 additional hardware buttons).
-* Additional M-codes have been defined in order to control the RF1000-specific functionality.
+#### Versionsstand RF.01.11.X-4 (04.01.2016)
 
-RF2000
-* Support for the RF2000 motherboard.
-* Support for the RF2000 feature controller (= 6 additional hardware buttons).
-* Additional M-codes have been defined in order to control the RF2000-specific functionality.
-
-## Changelog
-
-See changelog.txt
+#### Changelog
+siehe changelog-X4r3.txt
